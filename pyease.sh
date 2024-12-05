@@ -31,6 +31,7 @@ set_venv(){
           echo -n -e "."
           sleep 1
         done
+        echo -e "\e[32mSUCCESS: Virtual environment created at '$VENV_DIR'!\e[0m"
         echo "👍\033[1;32m Virtual environment '$VENV_DIR' created.\033[0m"
         if [ ! -d "$VSCODE_DIR" ]; then
             mkdir "$VSCODE_DIR"
