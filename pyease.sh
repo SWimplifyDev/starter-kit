@@ -22,25 +22,25 @@ MessagePrinter(){
 # Function to print info messages
   info() {
     local message=$1
-    echo -e "${INFO_COLOR}[Info]${RESET_COLOR} ${message}"
+    echo -e "${INFO_COLOR}[info]${RESET_COLOR} ${message}"
   }
 
   # Function to print success messages
   success() {
     local message=$1
-    echo -e "${SUCCESS_COLOR}[Success]${RESET_COLOR} ${message}"
+    echo -e "${SUCCESS_COLOR}[success]${RESET_COLOR} ${message}"
   }
 
   # Function to print warning messages
   warning() {
     local message=$1
-    echo -e "${WARNING_COLOR}[Warning]${RESET_COLOR} ${message}"
+    echo -e "${WARNING_COLOR}[warning]${RESET_COLOR} ${message}"
   }
 
   # Function to print error messages
   error() {
     local message=$1
-    echo -e "${ERROR_COLOR}[Error]${RESET_COLOR} ${message}"
+    echo -e "${ERROR_COLOR}[error]${RESET_COLOR} ${message}"
   }
 
 }
