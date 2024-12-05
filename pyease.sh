@@ -42,6 +42,7 @@ set_venv(){
     fi
 }
 
+
 delete_venv(){
     echo "Deleting venv"
     rm -r "$VENV_DIR"
