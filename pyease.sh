@@ -56,7 +56,7 @@ print_header() {
     VERSION="1.0.0"
     AUTHOR="Daniel Rodriguez"
     DESCRIPTION="https://github.com/SWimplifyDev/starter-kit"
-
+    echo ""
     echo -e "\033[1;34m########################################################\033[0m"  # Blue header line
     echo -e "\033[1;34m $SCRIPT_NAME - Version $VERSION \033[0m"
     echo -e "\033[1;34m Author: $AUTHOR \033[0m"
