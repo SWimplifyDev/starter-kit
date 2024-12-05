@@ -48,9 +48,25 @@ MessagePrinter(){
 
 MessagePrinter
 int #this
-
 ########################## End Message Printer Code ##########################
 
+############# Header ##################
+print_header() {
+    SCRIPT_NAME="MyScript"
+    VERSION="1.0.0"
+    AUTHOR="Your Name"
+    DESCRIPTION="This script does XYZ functionality."
+
+    echo -e "\033[1;34m############################################\033[0m"  # Blue header line
+    echo -e "\033[1;34m#          $SCRIPT_NAME - Version $VERSION          #\033[0m"
+    echo -e "\033[1;34m#               Author: $AUTHOR                 #\033[0m"
+    echo -e "\033[1;34m#       Description: $DESCRIPTION              #\033[0m"
+    echo -e "\033[1;34m############################################\033[0m"  # Blue footer line
+    echo ""
+}
+################# End Header ##########################
+
+print_header
 # Folder names to be created
 VENV_DIR=".venv"
 VSCODE_DIR=".vscode"
