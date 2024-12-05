@@ -46,7 +46,7 @@ MessagePrinter(){
 }
 
 MessagePrinter
-init
+int
 
 ########################## End Message Printer Code ##########################
 
