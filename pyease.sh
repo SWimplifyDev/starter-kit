@@ -21,8 +21,16 @@ json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
 set_venv(){
     # Check if the virtual enviroment already exists on working DIR
     if [ ! -d "$VENV_DIR" ]; then
+        
         # Create a new virtual environment
         python3 -m venv $VENV_DIR
+        PID=$!
+        echo -n -e "\e[33m Creating virtual environment.\e[0m"
+        echo -n -e "\e[33mCreating virtual environment"
+        while kill -0 $PID 2>/dev/null; do
+          echo -n -e "."
+          sleep 1
+        done
         echo "👍\033[1;32m Virtual environment '$VENV_DIR' created.\033[0m"
         if [ ! -d "$VSCODE_DIR" ]; then
             mkdir "$VSCODE_DIR"
