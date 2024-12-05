@@ -144,6 +144,8 @@ activate_venv(){
     fi
 }
 
+
+
 # Initialize a python project
 init(){
     print_header
@@ -153,15 +155,24 @@ init(){
     python --version
     pip install --upgrade pip
     touch main.py
-    
 }
 
 run(){
     python main.py
 }
 
-requirements(){
+freeze(){
     pip freeze > requirements.txt
+    info "Requirements saved at requirements.txt"
+}
+
+require(){
+    if [ -f "requirements.txt" ]; then
+        pip install -r requirements.txt
+        success "requirements.txt are installed."
+    else
+        warning "There are not requirements saved"
+    fi
 }
 
 update(){
@@ -196,8 +207,11 @@ case "$1" in
     run)
         run
         ;;
-    requirements)
-        requirements
+    freeze)
+        freeze
+        ;;
+    require)
+        require
         ;;
     update)
         update
