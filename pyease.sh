@@ -66,24 +66,31 @@ set_venv(){
         
         # Create a new virtual environment
         python3 -m venv $VENV_DIR
-        success "Virtual environment created at <'$VENV_DIR'>."
+        success "Virtual environment created at '$VENV_DIR'."
         if [ ! -d "$VSCODE_DIR" ]; then
             mkdir "$VSCODE_DIR"
             touch "$VSCODE_DIR/$VSCODE_JSON_FILE"
             echo "$json_content" > "$VSCODE_DIR/$VSCODE_JSON_FILE"
-            success "VSCode Settings created at <'$VSCODE_DIR'>."
+            success "VSCode Settings created at '$VSCODE_DIR'."
         fi
     else
-        info "irtual environment already exists."
+        info "Virtual environment already exists."
     fi
 }
 
 
 delete_venv(){
-    info "Deleting virtual environment..."
-    rm -r "$VENV_DIR"
-    rm -r "$VSCODE_DIR"
-    success "Deleted."
+    if [ -d "$VENV_DIR"]; then
+        info "Attempting to delete the virtual environment..."
+        if rm -r "$VENV_DIR"; then
+            success "Deleted successfully."
+        else
+            error "Could not delete the virtual environment"
+            exit 1
+        fi
+    else
+        info "Virtual environment does not exist."
+    fi
 }
 
 
