@@ -87,9 +87,6 @@ delete_venv(){
 }
 
 
-
-
-
 # Funcion to initialize a python project
 init(){
     set_venv
