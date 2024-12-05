@@ -18,6 +18,7 @@ MessagePrinter(){
     SUCCESS_COLOR="\033[1;32m" # Green
     WARNING_COLOR="\033[1;33m" # Yellow
     ERROR_COLOR="\033[1;31m"   # Red
+    PURPLE_COLOR="\033[1;34m" #
     RESET_COLOR="\033[0m"    # Reset    
     }
 # Function to print info messages
@@ -44,6 +45,11 @@ MessagePrinter(){
     echo -e "${ERROR_COLOR}[error]${RESET_COLOR} ${message}"
   }
 
+  header(){
+    local text=$1
+    echo -e "${PURPLE_COLOR}${text}${RESET_COLOR}"
+  }
+
 }
 
 MessagePrinter
@@ -57,11 +63,11 @@ print_header() {
     AUTHOR="Daniel Rodriguez"
     DESCRIPTION="https://github.com/SWimplifyDev/starter-kit"
     echo ""
-    echo -e "\033[1;34m########################################################\033[0m"  # Blue header line
-    echo -e "\033[1;34m $SCRIPT_NAME - Version $VERSION \033[0m"
-    echo -e "\033[1;34m Author: $AUTHOR \033[0m"
-    echo -e "\033[1;34m Description: $DESCRIPTION\033[0m"
-    echo -e "\033[1;34m########################################################\033[0m"  # Blue footer line
+    header "##########################################################"
+    header " $SCRIPT_NAME - Version $VERSION"
+    header " Author: $AUTHOR"
+    header " Description: $DESCRIPTION"
+    header "##########################################################"
     echo ""
 }
 #mahhfg cghnage
