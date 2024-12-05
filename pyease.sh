@@ -142,9 +142,8 @@ init(){
     source $VENV_DIR/bin/activate
     python --version
     pip install --upgrade pip
-    if [! -f "main.py" ]; then
-        touch main.py
-    fi
+    touch main.py
+    
 }
 
 run(){
