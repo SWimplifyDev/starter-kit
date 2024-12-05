@@ -93,6 +93,20 @@ delete_venv(){
     fi
 }
 
+delete_vscode_settings(){
+    if [ -d "$VSCODE_DIR" ]; then
+        info "Attempting to delete vscode settings..."
+        if rm -r "$VSCODE_DIR"; then
+            success "Deleted successfully."
+        else
+            error "Could not delete vscode settings"
+            exit 1
+        fi
+    else
+        info "vscode settings dont not exist."
+    fi
+}
+
 
 # Funcion to initialize a python project
 init(){
@@ -105,6 +119,7 @@ update(){
 
 clean(){
     delete_venv
+    delete_vscode_settings
 }
 
 case "$1" in
