@@ -59,26 +59,29 @@ VSCODE_JSON_FILE="settings.json"
 python_interpreter_path="$PWD/$VENV_DIR/bin/python"
 json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
 
-# Create venv if it does not exist
+# Create a venv if it does not exist
 set_venv(){
-    # Check if the virtual enviroment already exists on working DIR
     if [ ! -d "$VENV_DIR" ]; then
-        
-        # Create a new virtual environment
         python3 -m venv $VENV_DIR
         success "Virtual environment created at '$VENV_DIR'."
-        if [ ! -d "$VSCODE_DIR" ]; then
-            mkdir "$VSCODE_DIR"
-            touch "$VSCODE_DIR/$VSCODE_JSON_FILE"
-            echo "$json_content" > "$VSCODE_DIR/$VSCODE_JSON_FILE"
-            success "VSCode Settings created at '$VSCODE_DIR'."
-        fi
     else
         info "Virtual environment already exists."
     fi
 }
 
+# Create vscode settings if they dont exist
+set_vscode_settings(){
+    if [ ! -d "$VSCODE_DIR" ]; then
+        mkdir "$VSCODE_DIR"
+        touch "$VSCODE_DIR/$VSCODE_JSON_FILE"
+        echo "$json_content" > "$VSCODE_DIR/$VSCODE_JSON_FILE"
+        success "VSCode Settings created at '$VSCODE_DIR'."
+    else
+        info "VSCode Settings already exists."
+    fi
+}
 
+# Delete the venv
 delete_venv(){
     if [ -d "$VENV_DIR" ]; then
         info "Attempting to delete the virtual environment..."
@@ -93,6 +96,7 @@ delete_venv(){
     fi
 }
 
+# Delete vscode settings
 delete_vscode_settings(){
     if [ -d "$VSCODE_DIR" ]; then
         info "Attempting to delete vscode settings..."
@@ -107,16 +111,17 @@ delete_vscode_settings(){
     fi
 }
 
-
-# Funcion to initialize a python project
+# Initialize a python project
 init(){
     set_venv
+    set_vscode_settings
 }
 
 update(){
     echo "You are on Update"
 }
 
+# Delete venv and vscode settings
 clean(){
     delete_venv
     delete_vscode_settings
