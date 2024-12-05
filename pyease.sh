@@ -142,6 +142,11 @@ init(){
     source $VENV_DIR/bin/activate
     python --version
     pip install --upgrade pip
+    touch main.py
+}
+
+run(){
+    python main.py
 }
 
 requirements(){
@@ -168,11 +173,17 @@ update(){
 clean(){
     delete_venv
     delete_vscode_settings
+    if [ -f "requirements.txt" ]; then
+        rm requirements.txt
+    fi
 }
 
 case "$1" in
     init)
         init
+        ;;
+    run)
+        run
         ;;
     requirements)
         requirements
