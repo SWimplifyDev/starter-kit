@@ -134,12 +134,22 @@ delete_vscode_settings(){
     fi
 }
 
+activate_venv(){
+    if [ -f "$VENV_DIR/bin/activate" ]; then
+        info "Running from Unix"
+        source $VENV_DIR/bin/activate
+    elif [ -f "$VENV_DIR/Scripts/activate" ]; then
+        source $VENV_DIR/Scripts/activate
+        info "Running from Win"
+    fi
+}
+
 # Initialize a python project
 init(){
     print_header
     set_venv
     set_vscode_settings
-    source $VENV_DIR/bin/activate
+    activate_venv
     python --version
     pip install --upgrade pip
     touch main.py
