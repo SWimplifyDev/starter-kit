@@ -80,7 +80,7 @@ set_venv(){
 
 
 delete_venv(){
-    if [ -d "$VENV_DIR"]; then
+    if [ -d "$VENV_DIR" ]; then
         info "Attempting to delete the virtual environment..."
         if rm -r "$VENV_DIR"; then
             success "Deleted successfully."
