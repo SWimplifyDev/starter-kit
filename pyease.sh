@@ -140,6 +140,7 @@ init(){
     set_venv
     set_vscode_settings
     source $VENV_DIR/bin/activate
+    python --version
     pip install --upgrade pip
 }
 
