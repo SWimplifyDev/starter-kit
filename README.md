@@ -10,7 +10,7 @@ with commands
 ```https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh | bash -s -- init```
 
 Run the script from github using source
-```bash source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh)```
+```source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh)```
 with commands
 ```source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh) init```
 
