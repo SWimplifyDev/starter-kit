@@ -144,6 +144,10 @@ init(){
     pip install --upgrade pip
 }
 
+requirements(){
+    pip freeze > requirements.txt
+}
+
 update(){
     echo "You are on Update"
 }
@@ -157,6 +161,9 @@ clean(){
 case "$1" in
     init)
         init
+        ;;
+    requirements)
+        requirements
         ;;
     update)
         update
