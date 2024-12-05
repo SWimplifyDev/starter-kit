@@ -63,6 +63,9 @@ case "$1" in
     update)
         update
         ;;
+    clean)
+        clean
+        ;;
     *)
         echo "Usage: pyease {init | update}"
         ;;
