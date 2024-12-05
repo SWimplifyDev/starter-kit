@@ -115,6 +115,7 @@ delete_vscode_settings(){
 init(){
     set_venv
     set_vscode_settings
+    source $VENV_DIR/bin/activate
 }
 
 update(){
