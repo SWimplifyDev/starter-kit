@@ -35,15 +35,25 @@ set_venv(){
     fi
 }
 
+delete_venv(){
+    echo "Deleting venv"
+    rm -r "$VENV_DIR"
+    rm -r "$VSCODE_DIR"
+    echo "Deleted"
+}
+
 
 # Funcion to initialize a python project
 init(){
-    echo "You are on init"
     set_venv
 }
 
 update(){
     echo "You are on Update"
+}
+
+clean(){
+    delete_venv
 }
 
 case "$1" in

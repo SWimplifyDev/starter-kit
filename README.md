@@ -7,7 +7,7 @@ Access the raw content:
 Run the script from github:
 ```curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh | bash```
 with commands
-```https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh | bash -s -- init```
+```curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh | bash -s -- init```
 
 Run the script from github using source
 ```source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh)```
