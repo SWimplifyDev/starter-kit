@@ -53,7 +53,7 @@ MessagePrinter(){
 }
 
 MessagePrinter
-int #this
+int 
 ########################## End Message Printer Code ##########################
 
 ############# Header ##################
@@ -70,10 +70,8 @@ print_header() {
     header "##########################################################"
     echo ""
 }
-#mahhfg cghnage
-################# End Header ##########################
+################# End Header #############
 
-print_header
 # Folder names to be created
 VENV_DIR=".venv"
 VSCODE_DIR=".vscode"
@@ -138,9 +136,11 @@ delete_vscode_settings(){
 
 # Initialize a python project
 init(){
+    print_header
     set_venv
     set_vscode_settings
     source $VENV_DIR/bin/activate
+    pip install --upgrade pip
 }
 
 update(){
