@@ -66,15 +66,15 @@ set_venv(){
         
         # Create a new virtual environment
         python3 -m venv $VENV_DIR
-        echo -e "\033[32mSUCCESS: Virtual environment created at <'$VENV_DIR'>.\033[0m"
+        success "Virtual environment created at <'$VENV_DIR'>."
         if [ ! -d "$VSCODE_DIR" ]; then
             mkdir "$VSCODE_DIR"
             touch "$VSCODE_DIR/$VSCODE_JSON_FILE"
             echo "$json_content" > "$VSCODE_DIR/$VSCODE_JSON_FILE"
-            echo -e "\033[32mSUCCESS: VSCode Settings created at <'$VSCODE_DIR'>.\033[0m"
+            success "VSCode Settings created at <'$VSCODE_DIR'>."
         fi
     else
-        echo -e "⚠️ \033[1;33m Virtual environment '$VENV_DIR' already exists.\033[0m"
+        info "irtual environment already exists."
     fi
 }
 
