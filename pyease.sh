@@ -149,10 +149,19 @@ requirements(){
 }
 
 update(){
-    pip list --outdated
-    pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
-    pip freeze > requirements.txt
-    echo "You are on Update"
+    # Get the list of outdated packages
+    outdated=$(pip list --outdated)
+    # Check if the output is not empty
+    if [[ -z "$outdated" ]]; then
+        info "All packages are up-to-date."
+    else
+        warning "There are outdated packages:"
+        echo "$outdated"
+        info "Updating packages"
+        pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
+        pip freeze > requirements.txt
+        success "Packages updated."
+    fi
 }
 
 # Delete venv and vscode settings
