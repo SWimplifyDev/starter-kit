@@ -9,44 +9,53 @@
 ##################################################################################################
 
 ################## Message Printer #######################
-# Define the "MessagePrinter" class using functions
-MessagePrinter(){
-    # Function to initialize the class (like a constructor)
-    int(){
-    INFO_COLOR="\033[1;36m"  # Cyan
-    SUCCESS_COLOR="\033[1;32m" # Green
-    WARNING_COLOR="\033[1;33m" # Yellow
-    ERROR_COLOR="\033[1;31m"   # Red
-    RESET_COLOR="\033[0m"    # Reset    
-    }
-# Function to print info messages
-  info() {
-    local message=$1
-    echo -e "${INFO_COLOR}[info]${RESET_COLOR} ${message}"
-  }
+SCRIPT_URL="https://raw.githubusercontent.com/SWimplifyDev/bash/main/message-printer.sh"
 
-  # Function to print success messages
-  success() {
-    local message=$1
-    echo -e "${SUCCESS_COLOR}[success]${RESET_COLOR} ${message}"
-  }
+# Download and source the MessagePrinter script
+source <(curl -fsSL "$SCRIPT_URL")
 
-  # Function to print warning messages
-  warning() {
-    local message=$1
-    echo -e "${WARNING_COLOR}[warning]${RESET_COLOR} ${message}"
-  }
-
-  # Function to print error messages
-  error() {
-    local message=$1
-    echo -e "${ERROR_COLOR}[error]${RESET_COLOR} ${message}"
-  }
-
-}
-
+# Initialize the MessagePrinter class
 MessagePrinter
-int #this
+int
+
+# # Define the "MessagePrinter" class using functions
+# MessagePrinter(){
+#     # Function to initialize the class (like a constructor)
+#     int(){
+#     INFO_COLOR="\033[1;36m"  # Cyan
+#     SUCCESS_COLOR="\033[1;32m" # Green
+#     WARNING_COLOR="\033[1;33m" # Yellow
+#     ERROR_COLOR="\033[1;31m"   # Red
+#     RESET_COLOR="\033[0m"    # Reset    
+#     }
+# # Function to print info messages
+#   info() {
+#     local message=$1
+#     echo -e "${INFO_COLOR}[info]${RESET_COLOR} ${message}"
+#   }
+
+#   # Function to print success messages
+#   success() {
+#     local message=$1
+#     echo -e "${SUCCESS_COLOR}[success]${RESET_COLOR} ${message}"
+#   }
+
+#   # Function to print warning messages
+#   warning() {
+#     local message=$1
+#     echo -e "${WARNING_COLOR}[warning]${RESET_COLOR} ${message}"
+#   }
+
+#   # Function to print error messages
+#   error() {
+#     local message=$1
+#     echo -e "${ERROR_COLOR}[error]${RESET_COLOR} ${message}"
+#   }
+
+# }
+
+# MessagePrinter
+# int #this
 
 ########################## End Message Printer Code ##########################
 
