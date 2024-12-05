@@ -70,6 +70,7 @@ set_venv(){
     fi
 }
 
+
 # Create vscode settings if they dont exist
 set_vscode_settings(){
     if [ ! -d "$VSCODE_DIR" ]; then
