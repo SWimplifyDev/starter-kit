@@ -24,12 +24,6 @@ set_venv(){
         
         # Create a new virtual environment
         python3 -m venv $VENV_DIR
-        PID=$!
-        echo -n -e "\033[33m Creating virtual environment.\033[0m"
-        while kill -0 $PID 2>/dev/null; do
-          echo -n -e "."
-          sleep 3
-        done
         echo -e "\033[32mSUCCESS: Virtual environment created at <'$VENV_DIR'>.\033[0m"
         if [ ! -d "$VSCODE_DIR" ]; then
             mkdir "$VSCODE_DIR"
@@ -44,10 +38,10 @@ set_venv(){
 
 
 delete_venv(){
-    echo "Deleting venv"
+    echo -e "\033[1;34m[Info]\033[0m \033[34m Deleting .venv \033[0m"
     rm -r "$VENV_DIR"
     rm -r "$VSCODE_DIR"
-    echo "Deleted"
+    echo -e "\033[1;32m[Info]\033[0m \033[32m Deleted \033[0m"
 }
 
 
