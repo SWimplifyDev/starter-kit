@@ -149,6 +149,9 @@ requirements(){
 }
 
 update(){
+    pip list --outdated
+    pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
+    pip freeze > requirements.txt
     echo "You are on Update"
 }
 
