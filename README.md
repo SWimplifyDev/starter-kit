@@ -78,7 +78,7 @@ source pyease.sh init
 
 Feel free to contribute new features or scripts to this repository. Fork the repo, make your changes, and submit a pull request!
 
-#### Notes
+<!-- #### Notes
 
 Access the raw content:
 ```bash
@@ -124,4 +124,4 @@ or using source
 
 ```bash
 source pyease.sh init
-```
+``` -->
