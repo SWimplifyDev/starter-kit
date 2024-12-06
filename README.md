@@ -1,23 +1,126 @@
-# starter-kit
- Scripts to start diffferent projects
+# Starter Kit Dev Project
+
+This repository contains shell scripts to automate the initial setup of various programming projects. Each script is designed to save time and establish a standardized project structure, ready for coding.
+
+## Scripts
+
+### `pyease` - Python Project Starter
+
+The `pyease` script automates the creation of a Python project with a virtual environment, VS Code settings, and essential project files.
+
+#### Features
+
+- Creates a `.venv` folder for virtual environment management.
+- Generates `.vscode/settings.json` for project-specific VS Code configurations.
+- Sets up a `.gitignore` file tailored for Python projects.
+- Creates a `main.py` file, ready to start coding.
+- Additional functionality for streamlined project setup.
+
+#### Usage
+
+You can run the `pyease` script in two ways:
+
+##### 1. Direct Execution from the URL
+
+Run the script directly from its URL using `curl` and `source`:
+
+```bash
+source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh) [options]
+```
+
+This method ensures you always use the latest version of the script without downloading it locally.
+
+#### 2. Download and Run Locally
+
+Download the script and run it locally:
+
+1. Clone the repository or download the script:
+
+```bash
+curl -O https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh
+```
+
+2. Run the script:
+
+```bash
+source pyease.sh [options]
+```
+
+#### Options
+
+| Option       | Description                                                              |
+|--------------|--------------------------------------------------------------------------|
+| `venv`     | Create a virtual environment in the `.venv` folder.                        |
+| `vscode`   | Generate VS Code settings in the `.vscode` folder.                         |
+| `gitignore`| Set up a `.gitignore` file for a Python project.                           |
+| `main`     | Create a `main.py` file with a basic structure.                            |
+| `all`      | Execute all the above steps at once.                                       |
+| `help`     | Display help information about the script.                                 |
+
+#### Examples
+
+```bash
+# Run the script with all features directly from the URL
+source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh) init
+
+# Run the script locally to create only a virtual environment and a main.py file
+source pyease.sh init
+```
+
+#### Prerequisites
+
+- Bash installed on your system.
+- Python installed on your system (version 3.6 or higher is recommended).
+- Ensure the script has execution permissions if running locally. Use `chmod +x pyease.sh` if necessary.
+
+#### Contributing
+
+Feel free to contribute new features or scripts to this repository. Fork the repo, make your changes, and submit a pull request!
+
+#### Notes
 
 Access the raw content:
-```https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh```
+```bash
+https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh
+```
 
 Run the script from github:
-```curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh | bash```
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh | bash
+```
+
 with commands
-```curl -fsSL -H "Cache-Control: no-cache" https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh | bash -s -- init```
+
+```bash
+curl -fsSL -H "Cache-Control: no-cache" https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh | bash -s -- init
+```
 
 Run the script from github using source
-```source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh)```
+```bash
+source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh)
+```
+
 with commands
-```source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh) init```
+
+```bash
+source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh) init
+```
 
 Download the script:
-```curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh -o pyease.sh```
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/starter-kit/main/pyease.sh -o pyease.sh
+```
 
 Then run it from local:
-```bash pyease.sh init```
+
+```bash
+bash pyease.sh init
+```
+
 or using source
-```source pyease.sh init```
+
+```bash
+source pyease.sh init
+```
