@@ -24,25 +24,25 @@ MessagePrinter(){
 # Function to print info messages
   info() {
     local message=$1
-    echo -e "${INFO_COLOR}[info]${RESET_COLOR} ${message}"
+    echo -e "[${INFO_COLOR}info${RESET_COLOR}] ${message}"
   }
 
   # Function to print success messages
   success() {
     local message=$1
-    echo -e "${SUCCESS_COLOR}[success]${RESET_COLOR} ${message}"
+    echo -e "[${SUCCESS_COLOR}success${RESET_COLOR}] ${message}"
   }
 
   # Function to print warning messages
   warning() {
     local message=$1
-    echo -e "${WARNING_COLOR}[warning]${RESET_COLOR} ${message}"
+    echo -e "[${WARNING_COLOR}warning${RESET_COLOR}] ${message}"
   }
 
   # Function to print error messages
   error() {
     local message=$1
-    echo -e "${ERROR_COLOR}[error]${RESET_COLOR} ${message}"
+    echo -e "[${ERROR_COLOR}error${RESET_COLOR}] ${message}"
   }
 
   header(){
@@ -72,89 +72,149 @@ print_header() {
 }
 ################# End Header #############
 
-# Folder names to be created
+# Foldes to be created
 VENV_DIR=".venv"
 VSCODE_DIR=".vscode"
 
-# Settings for VScode
-VSCODE_JSON_FILE="settings.json"
+# Files to be created
+VSCODE_SETTINGS_FILE="settings.json"
+GITIGNORE_FILE=".gitignore"
+MAIN_TEMPLATE="main.py"
+
 python_interpreter_path="$PWD/$VENV_DIR/bin/python"
 json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
 
-# Create a venv if it does not exist
-set_venv(){
-    if [ ! -d "$VENV_DIR" ]; then
-        python3 -m venv $VENV_DIR
-        success "Virtual environment created at '$VENV_DIR'."
-    else
-        info "Virtual environment already exists."
-    fi
+# Function to set or remove venv
+venv(){
+    case $1 in
+        set)
+            if [ ! -d "$VENV_DIR" ]; then
+                python3 -m venv $VENV_DIR
+                success "Virtual environment created at '$VENV_DIR'."
+            else
+                info "Virtual environment already set."
+            fi
+            ;;
+        remove)
+            if [ -d "$VENV_DIR" ]; then
+                if rm -r "$VENV_DIR"; then
+                    success "venv deleted successfully."
+                else
+                    error "Could not delete the virtual environment"
+                    exit 1
+                fi
+            else
+                info "venv does not exist."
+            fi
+            ;;
+        activate)
+            if [ -f "$VENV_DIR/bin/activate" ]; then
+                source $VENV_DIR/bin/activate
+                info "Running from Unix"
+                python_version=$(python --version)
+                info "$python_version"
+            elif [ -f "$VENV_DIR/Scripts/activate" ]; then
+                source $VENV_DIR/Scripts/activate
+                info "Running from Win"
+                python_version=$(python --version)
+                info "$python_version"
+            fi
+            ;;
+        deactivate)
+            if [[ -n "$VIRTUAL_ENV" ]]; then
+                deactivate
+                success "Virtual environment deactivated."
+            else
+                info "No virtual environment is activated."
+            fi
+            ;;
+        *)
+            error "Unknown action: $1"
+            ;;
+    esac
 }
 
-
-# Create vscode settings if they dont exist
-set_vscode_settings(){
-    if [ ! -d "$VSCODE_DIR" ]; then
-        mkdir "$VSCODE_DIR"
-        touch "$VSCODE_DIR/$VSCODE_JSON_FILE"
-        echo "$json_content" > "$VSCODE_DIR/$VSCODE_JSON_FILE"
-        success "VSCode Settings created at '$VSCODE_DIR'."
-    else
-        info "VSCode Settings already exists."
-    fi
+# Function to set or remove vscode settings
+vscode(){
+    case $1 in
+        set)
+            if [ ! -d "$VSCODE_DIR" ]; then
+                mkdir "$VSCODE_DIR"
+                touch "$VSCODE_DIR/$VSCODE_SETTINGS_FILE"
+                echo "$json_content" > "$VSCODE_DIR/$VSCODE_SETTINGS_FILE"
+                success "VSCode Settings created at '$VSCODE_DIR'."
+            else
+                info "VSCode Settings already set."
+            fi
+            ;;
+        remove)
+            if [ -d "$VSCODE_DIR" ]; then
+                if rm -r "$VSCODE_DIR"; then
+                    success "vscode settings deleted successfully."
+                else
+                    error "Could not delete vscode settings"
+                    exit 1
+                fi
+            else
+                info "vscode settings dont not exist."
+            fi
+            ;;
+        *)
+            error "Unknown action: $1"
+            ;;
+    esac
 }
 
-# Delete the venv
-delete_venv(){
-    if [ -d "$VENV_DIR" ]; then
-        info "Attempting to delete the virtual environment..."
-        if rm -r "$VENV_DIR"; then
-            success "Deleted successfully."
-        else
-            error "Could not delete the virtual environment"
-            exit 1
-        fi
-    else
-        info "Virtual environment does not exist."
-    fi
+gitignore(){
+    case $1 in
+        set)
+            if [ ! -e "$GITIGNORE_FILE" ]; then
+                echo ".venv" > "$GITIGNORE_FILE"
+                echo ".vscode" >> "$GITIGNORE_FILE"
+                echo ".DS_Store" >> "$GITIGNORE_FILE"
+                success ".gitignore file created."
+            else
+                info ".gitignore already set"
+            fi
+            ;;
+        remove)
+            if [ -e ".gitignore" ]; then
+                rm .gitignore
+            fi
+            ;;
+        *)
+            error "Unknown action: $1"
+            ;;  
+    esac
 }
 
-# Delete vscode settings
-delete_vscode_settings(){
-    if [ -d "$VSCODE_DIR" ]; then
-        info "Attempting to delete vscode settings..."
-        if rm -r "$VSCODE_DIR"; then
-            success "Deleted successfully."
-        else
-            error "Could not delete vscode settings"
-            exit 1
-        fi
-    else
-        info "vscode settings dont not exist."
-    fi
+template(){
+    case $1 in
+        set)
+            if [ ! -e "$MAIN_TEMPLATE" ]; then
+                echo "from datetime import datetime" > "$MAIN_TEMPLATE"
+                echo " " >> "$MAIN_TEMPLATE"
+                echo "print(f'Hello pyease, time:{datetime.now()}')" >> "$MAIN_TEMPLATE"
+                success "$MAIN_TEMPLATE file created."
+            else
+                info "$MAIN_TEMPLATE already set"
+            fi
+            ;;
+        *)  
+            error "Unknown action: $1"
+            ;;
+    esac
 }
-
-activate_venv(){
-    if [ -f "$VENV_DIR/bin/activate" ]; then
-        info "Running from Unix"
-        source $VENV_DIR/bin/activate
-    elif [ -f "$VENV_DIR/Scripts/activate" ]; then
-        source $VENV_DIR/Scripts/activate
-        info "Running from Win"
-    fi
-}
-
-
 
 # Initialize a python project
 init(){
     print_header
-    set_venv
-    set_vscode_settings
-    activate_venv
-    python --version
+    venv set
+    vscode set
+    gitignore set
+    venv activate
     pip install --upgrade pip
-    touch main.py
+    template set
 }
 
 run(){
@@ -167,7 +227,7 @@ freeze(){
 }
 
 require(){
-    if [ -f "requirements.txt" ]; then
+    if [ -e "requirements.txt" ]; then
         pip install -r requirements.txt
         success "requirements.txt are installed."
     else
@@ -193,11 +253,13 @@ update(){
 
 # Delete venv and vscode settings
 clean(){
-    delete_venv
-    delete_vscode_settings
-    if [ -f "requirements.txt" ]; then
+    venv remove
+    vscode remove
+    if [ -e "requirements.txt" ]; then
         rm requirements.txt
     fi
+    gitignore remove
+    venv deactivate
 }
 ###
 case "$1" in

@@ -50,7 +50,7 @@ source pyease.sh [options]
 
 | Option       | Description                                                              |
 |--------------|--------------------------------------------------------------------------|
-| `venv`     | Create a virtual environment in the `.venv` folder.                        |
+| `init`     | Create a virtual environment in the `.venv` folder.                        |
 | `vscode`   | Generate VS Code settings in the `.vscode` folder.                         |
 | `gitignore`| Set up a `.gitignore` file for a Python project.                           |
 | `main`     | Create a `main.py` file with a basic structure.                            |
