@@ -72,6 +72,21 @@ print_header() {
 }
 ################# End Header #############
 
+help() {
+    header "#################### HELP ###########################################################"
+    echo "Usage: pyease {init | run | save_req | install_req | update_req | clean | help}"
+    echo ""
+    echo "Commands:"
+    echo "  init          - Initializes the project setup (e.g., creates .venv, main.py, etc.)."
+    echo "  run           - Runs the project or starts the application."
+    echo "  save_req      - Saves the project's current requirements (e.g., via pip freeze)."
+    echo "  install_req   - Installs the project's required dependencies."
+    echo "  update_req    - Updates the project's dependencies."
+    echo "  clean         - Cleans up the project by removing unnecessary files or directories."
+    echo "  help          - Displays this help message."
+    header "#####################################################################################"
+}
+
 # Foldes to be created
 VENV_DIR=".venv"
 VSCODE_DIR=".vscode"
@@ -79,7 +94,8 @@ VSCODE_DIR=".vscode"
 # Files to be created
 VSCODE_SETTINGS_FILE="settings.json"
 GITIGNORE_FILE=".gitignore"
-MAIN_TEMPLATE="main.py"
+MAIN_TEMPLATE_FILE="main.py"
+REQUIREMENTS_FILE="requirements.txt"
 
 python_interpreter_path="$PWD/$VENV_DIR/bin/python"
 json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
@@ -165,6 +181,7 @@ vscode(){
     esac
 }
 
+# Function to set or remove .gitignore
 gitignore(){
     case $1 in
         set)
@@ -188,16 +205,17 @@ gitignore(){
     esac
 }
 
+# Function to create a main.py file as template
 template(){
     case $1 in
         set)
-            if [ ! -e "$MAIN_TEMPLATE" ]; then
-                echo "from datetime import datetime" > "$MAIN_TEMPLATE"
-                echo " " >> "$MAIN_TEMPLATE"
-                echo "print(f'Hello pyease, time:{datetime.now()}')" >> "$MAIN_TEMPLATE"
-                success "$MAIN_TEMPLATE file created."
+            if [ ! -e "$MAIN_TEMPLATE_FILE" ]; then
+                echo "from datetime import datetime" > "$MAIN_TEMPLATE_FILE"
+                echo " " >> "$MAIN_TEMPLATE_FILE"
+                echo "print(f'Hello pyease, time:{datetime.now()}')" >> "$MAIN_TEMPLATE_FILE"
+                success "$MAIN_TEMPLATE_FILE file created."
             else
-                info "$MAIN_TEMPLATE already set"
+                info "$MAIN_TEMPLATE_FILE already set"
             fi
             ;;
         *)  
@@ -218,46 +236,54 @@ init(){
 }
 
 run(){
-    python main.py
+    python $MAIN_TEMPLATE_FILE
 }
 
-freeze(){
-    pip freeze > requirements.txt
-    info "Requirements saved at requirements.txt"
-}
-
-require(){
-    if [ -e "requirements.txt" ]; then
-        pip install -r requirements.txt
-        success "requirements.txt are installed."
-    else
-        warning "There are not requirements saved"
-    fi
-}
-
-update(){
-    # Get the list of outdated packages
-    outdated=$(pip list --outdated)
-    # Check if the output is not empty
-    if [[ -z "$outdated" ]]; then
-        info "All packages are up-to-date."
-    else
-        warning "There are outdated packages:"
-        echo "$outdated"
-        info "Updating packages"
-        pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
-        pip freeze > requirements.txt
-        success "Packages updated."
-    fi
+requirements(){
+    case $1 in
+        save)
+            pip freeze > $REQUIREMENTS_FILE
+            success "Requirements saved."
+            ;;
+        install)
+            if [ -e "$REQUIREMENTS_FILE" ]; then
+                pip install -r $REQUIREMENTS_FILE
+                success "All requirements are installed."
+            else
+                error "There are not $REQUIREMENTS_FILE available"
+            fi
+            ;;
+        update)
+            # Get the list of outdated packages
+            outdated=$(pip list --outdated)
+            # Check if the output is not empty
+            if [[ -z "$outdated" ]]; then
+                info "All packages are up-to-date."
+            else
+                warning "There are outdated packages:"
+                echo "$outdated"
+                info "Updating requirements"
+                pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
+                pip freeze > $REQUIREMENTS_FILE
+                success "Requirements updated."
+            fi
+            ;;
+        remove)
+            if [ -e "$REQUIREMENTS_FILE" ]; then
+                rm $REQUIREMENTS_FILE
+            fi
+            ;;
+        *)  
+            error "Unknown action: $1"
+            ;;
+    esac
 }
 
 # Delete venv and vscode settings
 clean(){
     venv remove
     vscode remove
-    if [ -e "requirements.txt" ]; then
-        rm requirements.txt
-    fi
+    requirements remove
     gitignore remove
     venv deactivate
 }
@@ -269,19 +295,29 @@ case "$1" in
     run)
         run
         ;;
-    freeze)
-        freeze
+    save_req)
+        requirements save
         ;;
-    require)
-        require
+    install_req)
+        requirements install
         ;;
-    update)
-        update
+    update_req)
+        requirements update
         ;;
     clean)
         clean
         ;;
+    help)
+        help
+        ;;
     *)
-        echo "Usage: pyease {init | update}"
+        error "Usage: pyease {init | run | save_req | install_req | update_req | clean | help}"
         ;;
 esac
+
+
+
+
+
+
+

@@ -48,14 +48,15 @@ source pyease.sh [options]
 
 #### Options
 
-| Option       | Description                                                              |
-|--------------|--------------------------------------------------------------------------|
-| `init`     | Create a virtual environment in the `.venv` folder.                        |
-| `vscode`   | Generate VS Code settings in the `.vscode` folder.                         |
-| `gitignore`| Set up a `.gitignore` file for a Python project.                           |
-| `main`     | Create a `main.py` file with a basic structure.                            |
-| `all`      | Execute all the above steps at once.                                       |
-| `help`     | Display help information about the script.                                 |
+| Option        | Description                                                              |
+|---------------|--------------------------------------------------------------------------|
+| `init`        | Create a virtual environment in the `.venv` folder.                      |
+| `run`         | Runs the project or starts the application.                              |
+| `save_req`    | Saves the project's current requirements (e.g., via `pip freeze`).       |
+| `install_req` | Installs the project's required dependencies.                            |
+| `update_req`  | Updates the project's dependencies.                                      |
+| `clean`       | Cleans up the project by removing unnecessary files or directories.      |
+| `help`        | Displays this help message.                                              |
 
 #### Examples
 
