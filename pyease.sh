@@ -227,16 +227,10 @@ template(){
 code_editor(){
     case $1 in
         open)
-            DIR=$(pwd)
-
-            if pgrep -f "code $DIR" > /dev/null; then
-                info "VSCode is already open in this directory."
+            if command -v code &> /dev/null; then
+                code .
             else
-                if command -v code &> /dev/null; then
-                    code .
-                else
-                    warning "Visual Studio Code is not installed or `code` command hasn't been added to your system's PATH."
-                fi
+                warning "Visual Studio Code is not installed or `code` command hasn't been added to your system's PATH."
             fi
             ;;
         *)  
