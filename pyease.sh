@@ -224,6 +224,27 @@ template(){
     esac
 }
 
+code_editor(){
+    case $1 in
+        open)
+            DIR=$(pwd)
+
+            if pgrep -f "code $DIR" > /dev/null; then
+                info "VSCode is already open in this directory."
+            else
+                if command -v code &> /dev/null; then
+                    code .
+                else
+                    warning "Visual Studio Code is not installed or `code` command hasn't been added to your system's PATH."
+                fi
+            fi
+            ;;
+        *)  
+            error "Unknown action: $1"
+            ;;
+    esac
+}
+
 # Initialize a python project
 init(){
     print_header
@@ -233,6 +254,7 @@ init(){
     venv activate
     pip install --upgrade pip
     template set
+    code_editor open
 }
 
 run(){
@@ -314,10 +336,3 @@ case "$1" in
         error "Usage: pyease {init | run | save_req | install_req | update_req | clean | help}"
         ;;
 esac
-
-
-
-
-
-
-
