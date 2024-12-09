@@ -84,7 +84,7 @@ help() {
     echo "  save_req      - Creates a requirements.txt file if one does not already exist."
     echo "  install_req   - Installs dependencies if a requirements.txt file is available."
     echo "  update_req    - Updates the project's dependencies."
-    echo "  clean         - Cleans up the project by removing unnecessary files or directories."
+    echo "  clean         - Removes the .venv and .vscode folders."
     echo "  help          - Displays this help message."
     header "----------------------------------------------------------------------------------------"
 }
@@ -314,7 +314,6 @@ requirements(){
 clean(){
     venv remove
     vscode remove
-    gitignore remove
     venv deactivate
 }
 ###

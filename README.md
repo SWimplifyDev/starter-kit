@@ -59,7 +59,7 @@ source pyease.sh [options]
 | `save_req`    | Creates a `requirements.txt` file if one does not already exist.            |
 | `install_req` | Installs dependencies if a `requirements.txt` file is available.            |
 | `update_req`  | Updates the project's dependencies.                                         |
-| `clean`       | Cleans up the project by removing unnecessary files or directories.         |
+| `clean`       | Removes the `.venv` and `.vscode` folders.                                  |
 | `help`        | Displays this help message.                                                 |
 
 #### Examples
