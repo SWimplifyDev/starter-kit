@@ -139,13 +139,21 @@ venv(){
             fi
             ;;
         deactivate)
-            if [[ -n "$VIRTUAL_ENV" ]]; then
+            if venv is_activated; then
                 deactivate
                 success "Virtual environment deactivated."
             else
                 info "No virtual environment is activated."
             fi
             ;;
+        is_activated)
+            # Verify if .venv is active
+            if [[ -n "$VIRTUAL_ENV" ]]; then
+                return 0
+            else
+                return 1
+            fi
+
         *)
             error "Unknown action: $1"
             ;;
@@ -332,13 +340,28 @@ case "$1" in
         run
         ;;
     save_req)
-        requirements save
+        if venv is_activated; then
+            requirements save
+        else
+            error "There is not .venv activated"
+            info "First activate a venv by running the command: init"
+        fi
         ;;
     install_req)
-        requirements install
+        if venv is_activated; then
+            requirements install
+        else
+            error "There is not .venv activated"
+            info "First activate a venv by running the command: init"
+        fi
         ;;
     update_req)
-        requirements update
+        if venv is_activated; then
+            requirements update
+        else
+            error "There is not .venv activated"
+            info "First activate a venv by running the command: init"
+        fi
         ;;
     clean)
         clean
