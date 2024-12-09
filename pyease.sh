@@ -261,7 +261,7 @@ run(){
 requirements(){
     case $1 in
         save)
-            if [! -e "$REQUIREMENTS_FILE" ]; then
+            if [ ! -e "$REQUIREMENTS_FILE" ]; then
                 pip freeze > $REQUIREMENTS_FILE
                 success "$REQUIREMENTS_FILE saved."
             else
