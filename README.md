@@ -20,7 +20,7 @@ The `pyease` script automates the creation of a Python project with a virtual en
 
 You can run the `pyease` script in two ways:
 
-##### 1. Direct Execution from the URL
+#### 1. Direct Execution from the URL
 
 Run the script directly from its URL using `curl` and `source`:
 

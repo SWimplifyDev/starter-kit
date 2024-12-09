@@ -337,7 +337,12 @@ case "$1" in
         init
         ;;
     run)
-        run
+        if venv is_activated; then
+            run
+        else
+            error "There is not .venv activated"
+            info "First activate a venv by running the command: init"
+        fi
         ;;
     save_req)
         if venv is_activated; then
