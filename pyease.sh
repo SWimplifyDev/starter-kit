@@ -266,6 +266,7 @@ requirements(){
                 success "$REQUIREMENTS_FILE saved."
             else
                 error "$REQUIREMENTS_FILE already exist."
+            fi
             ;;
         install)
             if [ -e "$REQUIREMENTS_FILE" ]; then
