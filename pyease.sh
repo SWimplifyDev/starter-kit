@@ -191,6 +191,7 @@ gitignore(){
                 echo ".venv" > "$GITIGNORE_FILE"
                 echo ".vscode" >> "$GITIGNORE_FILE"
                 echo ".DS_Store" >> "$GITIGNORE_FILE"
+                echo "__pycache__" >> "$GITIGNORE_FILE"
                 success ".gitignore file created."
             else
                 info ".gitignore already set"
@@ -260,13 +261,26 @@ run(){
 requirements(){
     case $1 in
         save)
-            pip freeze > $REQUIREMENTS_FILE
-            success "Requirements saved."
+            if [! -e "$REQUIREMENTS_FILE" ]; then
+                pip freeze > $REQUIREMENTS_FILE
+                success "$REQUIREMENTS_FILE saved."
+            else
+                error "$REQUIREMENTS_FILE already exist."
             ;;
         install)
             if [ -e "$REQUIREMENTS_FILE" ]; then
                 pip install -r $REQUIREMENTS_FILE
                 success "All requirements are installed."
+                 # Get the list of outdated packages
+                outdated=$(pip list --outdated)
+                # Check if the output is not empty
+                if [[ -z "$outdated" ]]; then
+                    info "All packages are up-to-date."
+                else
+                    warning "There are outdated packages:"
+                    echo "$outdated"
+                    info "To update packages run command: update_req"
+                fi
             else
                 error "There are not $REQUIREMENTS_FILE available"
             fi
@@ -278,8 +292,6 @@ requirements(){
             if [[ -z "$outdated" ]]; then
                 info "All packages are up-to-date."
             else
-                warning "There are outdated packages:"
-                echo "$outdated"
                 info "Updating requirements"
                 pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
                 pip freeze > $REQUIREMENTS_FILE
