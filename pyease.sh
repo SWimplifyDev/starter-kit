@@ -81,7 +81,7 @@ help() {
     echo "                 - Creates a .gitignore to avoid submitting .venv to the repository."
     echo "                 - Creates a main.py file to start coding right away."
     echo "  run           - Runs the project or starts the application."
-    echo "  save_req      - Saves the project's current requirements (e.g., via pip freeze)."
+    echo "  save_req      - Creates a requirements.txt file if one does not already exist."
     echo "  install_req   - Installs the project's required dependencies."
     echo "  update_req    - Updates the project's dependencies."
     echo "  clean         - Cleans up the project by removing unnecessary files or directories."

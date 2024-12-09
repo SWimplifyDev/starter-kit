@@ -56,7 +56,7 @@ source pyease.sh [options]
 |               | - Creates a `.gitignore` to avoid submitting `.venv` to the repository.     |
 |               | - Creates a `main.py` file to start coding right away.                      |
 | `run`         | Runs the project or starts the application.                                 |
-| `save_req`    | Saves the project's current requirements (e.g., via `pip freeze`).          |
+| `save_req`    | Creates a `requirements.txt` file if one does not already exist.            |
 | `install_req` | Installs the project's required dependencies.                               |
 | `update_req`  | Updates the project's dependencies.                                         |
 | `clean`       | Cleans up the project by removing unnecessary files or directories.         |
