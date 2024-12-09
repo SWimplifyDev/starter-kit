@@ -73,7 +73,7 @@ print_header() {
 ################# End Header #############
 
 help() {
-    header "#################### HELP ###########################################################"
+    header "-------------------- HELP --------------------------------------------------------------"
     echo "Commands:"
     echo "  init          - Initializes the project setup:"
     echo "                 - Creates a .venv folder for virtual environment."
@@ -86,7 +86,7 @@ help() {
     echo "  update_req    - Updates the project's dependencies."
     echo "  clean         - Cleans up the project by removing unnecessary files or directories."
     echo "  help          - Displays this help message."
-    header "#####################################################################################"
+    header "----------------------------------------------------------------------------------------"
 }
 
 # Foldes to be created
