@@ -63,11 +63,11 @@ print_header() {
     AUTHOR="Daniel Rodriguez"
     DESCRIPTION="https://github.com/SWimplifyDev/starter-kit"
     echo ""
-    header "##########################################################"
+    header "----------------------------------------------------------"
     header " $SCRIPT_NAME - Version $VERSION"
     header " Author: $AUTHOR"
     header " Description: $DESCRIPTION"
-    header "##########################################################"
+    header "----------------------------------------------------------"
     echo ""
 }
 ################# End Header #############
