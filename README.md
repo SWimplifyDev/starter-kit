@@ -48,15 +48,19 @@ source pyease.sh [options]
 
 #### Options
 
-| Option        | Description                                                              |
-|---------------|--------------------------------------------------------------------------|
-| `init`        | Create a virtual environment in the `.venv` folder.                      |
-| `run`         | Runs the project or starts the application.                              |
-| `save_req`    | Saves the project's current requirements (e.g., via `pip freeze`).       |
-| `install_req` | Installs the project's required dependencies.                            |
-| `update_req`  | Updates the project's dependencies.                                      |
-| `clean`       | Cleans up the project by removing unnecessary files or directories.      |
-| `help`        | Displays this help message.                                              |
+| Option        | Description                                                                 |
+|---------------|-----------------------------------------------------------------------------|
+| `init`        | Initializes the project setup:                                              |
+|               | - Creates a `.venv` folder for virtual environment.                         |
+|               | - Generates `.vscode/settings.json` to configure VS Code to use the `.venv`.|
+|               | - Creates a `.gitignore` to avoid submitting `.venv` to the repository.     |
+|               | - Creates a `main.py` file to start coding right away.                      |
+| `run`         | Runs the project or starts the application.                                 |
+| `save_req`    | Saves the project's current requirements (e.g., via `pip freeze`).          |
+| `install_req` | Installs the project's required dependencies.                               |
+| `update_req`  | Updates the project's dependencies.                                         |
+| `clean`       | Cleans up the project by removing unnecessary files or directories.         |
+| `help`        | Displays this help message.                                                 |
 
 #### Examples
 

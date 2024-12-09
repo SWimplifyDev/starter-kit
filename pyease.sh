@@ -74,10 +74,12 @@ print_header() {
 
 help() {
     header "#################### HELP ###########################################################"
-    echo "Usage: pyease {init | run | save_req | install_req | update_req | clean | help}"
-    echo ""
     echo "Commands:"
-    echo "  init          - Initializes the project setup (e.g., creates .venv, main.py, etc.)."
+    echo "  init          - Initializes the project setup:"
+    echo "                 - Creates a .venv folder for virtual environment."
+    echo "                 - Generates .vscode/settings.json to configure VS Code to use the .venv."
+    echo "                 - Creates a .gitignore to avoid submitting .venv to the repository."
+    echo "                 - Creates a main.py file to start coding right away."
     echo "  run           - Runs the project or starts the application."
     echo "  save_req      - Saves the project's current requirements (e.g., via pip freeze)."
     echo "  install_req   - Installs the project's required dependencies."
@@ -299,7 +301,6 @@ requirements(){
 clean(){
     venv remove
     vscode remove
-    requirements remove
     gitignore remove
     venv deactivate
 }
