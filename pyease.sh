@@ -271,7 +271,14 @@ requirements(){
         install)
             if [ -e "$REQUIREMENTS_FILE" ]; then
                 pip install -r $REQUIREMENTS_FILE
-                success "All requirements are installed."
+                if [ $? -eq 0 ]; then
+                    success "All requirements are installed."
+                else
+                    error "Packages installation failed."
+                    info "Try one by one installation."
+                    exit 1
+                fi
+                
                  # Get the list of outdated packages
                 outdated=$(pip list --outdated)
                 # Check if the output is not empty
