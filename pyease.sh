@@ -346,6 +346,7 @@ requirements(){
         update)
             outdated=$(pip list --outdated)
             if [[ -z "$outdated" ]]; then
+                pip freeze > $REQUIREMENTS_FILE
                 info "All packages are up-to-date."
             else
                 info "Updating requirements"
