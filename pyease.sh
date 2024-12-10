@@ -103,12 +103,29 @@ REQUIREMENTS_FILE="requirements.txt"
 python_interpreter_path="$PWD/$VENV_DIR/bin/python"
 json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
 
+
+is_windows() {
+    if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+        return 0
+    elif uname -s | grep -qE '^(MINGW|MSYS|CYGWIN)'; then
+        return 0
+    elif [[ -n "$WINDIR" || -n "$SystemRoot" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # Function to set or remove venv
 venv(){
     case $1 in
         set)
             if [ ! -d "$VENV_DIR" ]; then
-                python3 -m venv $VENV_DIR
+                if is_windows; then
+                    py -m venv $VENV_DIR
+                else
+                    python3 -m venv $VENV_DIR
+                fi
                 if [ $? -eq 0 ]; then
                     success "Virtual environment created at '$VENV_DIR'."
                 else
