@@ -158,7 +158,12 @@ venv(){
                 source $VENV_DIR/Scripts/activate
                 info "Running from Win"
                 python_version=$(py --version)
-                info "$python_version"
+                if [ $? -eq 0 ]; then
+                    info "$python_version"
+                else
+                    error "python version installed on machine is not the same as the one on .venv"
+                    info "to remove the actual .venv and create a new one with the installed pyhon vreion, run command: clean"
+                fi
                 $VENV_DIR/Scripts/python.exe -m pip install --upgrade pip
             fi
             ;;
