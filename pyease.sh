@@ -367,6 +367,14 @@ case "$1" in
             info "First activate a venv by running the command: init"
         fi
         ;;
+    outdated_req)
+        if venv is_activated; then
+            requirements check_outdated
+        else
+            error "There is not .venv activated"
+            info "First activate a venv by running the command: init"
+        fi
+        ;;
     clean)
         clean
         ;;
