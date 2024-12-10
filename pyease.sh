@@ -152,8 +152,13 @@ venv(){
                 source $VENV_DIR/bin/activate
                 info "Running from Unix"
                 python_version=$(python --version)
-                info "$python_version"
-                pip install --upgrade pip
+                if [ $? -eq 0 ]; then
+                    info "$python_version"
+                    pip install --upgrade pip
+                else
+                    error "python version installed on machine is not the same as the one on .venv"
+                    info "to remove the actual .venv and create a new one with the installed pyhon version, run command: clean, and then init"
+                fi
             elif [ -f "$VENV_DIR/Scripts/activate" ]; then
                 source $VENV_DIR/Scripts/activate
                 info "Running from Win"
@@ -163,7 +168,7 @@ venv(){
                     $VENV_DIR/Scripts/python.exe -m pip install --upgrade pip
                 else
                     error "python version installed on machine is not the same as the one on .venv"
-                    info "to remove the actual .venv and create a new one with the installed pyhon vreion, run command: clean"
+                    info "to remove the actual .venv and create a new one with the installed pyhon vreion, run command: clean, and then init"
                 fi
             fi
             ;;
@@ -339,10 +344,15 @@ requirements(){
             fi
             ;;
         update)
-            info "Updating requirements"
-            pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
-            pip freeze > $REQUIREMENTS_FILE
-            success "Requirements updated."
+            outdated=$(pip list --outdated)
+            if [[ -z "$outdated" ]]; then
+                info "All packages are up-to-date."
+            else
+                info "Updating requirements"
+                pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
+                pip freeze > $REQUIREMENTS_FILE
+                success "Requirements updated."
+            fi
             ;;
         remove)
             if [ -e "$REQUIREMENTS_FILE" ]; then
