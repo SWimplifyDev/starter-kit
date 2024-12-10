@@ -83,6 +83,7 @@ help() {
     echo "  run           - Runs the project or starts the application."
     echo "  save_req      - Creates a requirements.txt file if one does not already exist."
     echo "  install_req   - Installs dependencies if a requirements.txt file is available."
+    echo "  outdated_req  - Checks if requirements are outdated."
     echo "  update_req    - Updates the project's dependencies."
     echo "  clean         - Removes the .venv and .vscode folders."
     echo "  help          - Displays this help message."
@@ -382,6 +383,6 @@ case "$1" in
         help
         ;;
     *)
-        error "Usage: pyease {init | run | save_req | install_req | update_req | clean | help}"
+        error "Usage: pyease {init | run | save_req | install_req | update_req | clean | outdated_req | help}"
         ;;
 esac

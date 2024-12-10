@@ -58,6 +58,7 @@ source pyease.sh [options]
 | `run`         | Runs the project or starts the application.                                 |
 | `save_req`    | Creates a `requirements.txt` file if one does not already exist.            |
 | `install_req` | Installs dependencies if a `requirements.txt` file is available.            |
+| `outdated_req`| Checks if requirements are outdated.                                        |
 | `update_req`  | Updates the project's dependencies.                                         |
 | `clean`       | Removes the `.venv` and `.vscode` folders.                                  |
 | `help`        | Displays this help message.                                                 |
