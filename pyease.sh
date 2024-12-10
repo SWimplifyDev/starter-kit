@@ -109,7 +109,12 @@ venv(){
         set)
             if [ ! -d "$VENV_DIR" ]; then
                 python3 -m venv $VENV_DIR
-                success "Virtual environment created at '$VENV_DIR'."
+                if [ $? -eq 0 ]; then
+                    success "Virtual environment created at '$VENV_DIR'."
+                else
+                    error "Virtual environment could not be created."
+                    exit 1
+                fi
             else
                 info "Virtual environment already set."
             fi
