@@ -160,11 +160,11 @@ venv(){
                 python_version=$(py --version)
                 if [ $? -eq 0 ]; then
                     info "$python_version"
+                    $VENV_DIR/Scripts/python.exe -m pip install --upgrade pip
                 else
                     error "python version installed on machine is not the same as the one on .venv"
                     info "to remove the actual .venv and create a new one with the installed pyhon vreion, run command: clean"
                 fi
-                $VENV_DIR/Scripts/python.exe -m pip install --upgrade pip
             fi
             ;;
         deactivate)
