@@ -130,7 +130,6 @@ venv(){
                     success "Virtual environment created at '$VENV_DIR'."
                 else
                     error "Virtual environment could not be created."
-                    exit 1
                 fi
             else
                 info "Virtual environment already set."
@@ -158,7 +157,7 @@ venv(){
             elif [ -f "$VENV_DIR/Scripts/activate" ]; then
                 source $VENV_DIR/Scripts/activate
                 info "Running from Win"
-                python_version=$(python --version)
+                python_version=$(py --version)
                 info "$python_version"
                 $VENV_DIR/Scripts/python.exe -m pip install --upgrade pip
             fi
@@ -289,7 +288,11 @@ init(){
 }
 
 run(){
-    python $MAIN_TEMPLATE_FILE
+    if is_windows; then
+        py $MAIN_TEMPLATE_FILE
+    else
+        python $MAIN_TEMPLATE_FILE
+    fi
 }
 
 requirements(){
