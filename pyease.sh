@@ -131,11 +131,13 @@ venv(){
                 info "Running from Unix"
                 python_version=$(python --version)
                 info "$python_version"
+                pip install --upgrade pip
             elif [ -f "$VENV_DIR/Scripts/activate" ]; then
                 source $VENV_DIR/Scripts/activate
                 info "Running from Win"
                 python_version=$(python --version)
                 info "$python_version"
+                $VENV_DIR/Scripts/python.exe -m pip install --upgrade pip
             fi
             ;;
         deactivate)
@@ -149,8 +151,10 @@ venv(){
         is_activated)
             # Verify if .venv is active
             if [[ -n "$VIRTUAL_ENV" ]]; then
+                # True
                 return 0
             else
+                # False
                 return 1
             fi
             ;;
@@ -257,7 +261,6 @@ init(){
     vscode set
     gitignore set
     venv activate
-    pip install --upgrade pip
     template set
     code_editor open
 }
@@ -276,6 +279,18 @@ requirements(){
                 error "$REQUIREMENTS_FILE already exist."
             fi
             ;;
+        check_outdated)
+            # Get the list of outdated packages
+            outdated=$(pip list --outdated)
+            # Check if the output is not empty
+            if [[ -z "$outdated" ]]; then
+                info "All packages are up-to-date."
+            else
+                warning "There are outdated packages:"
+                echo "$outdated"
+                info "To update packages run command: update_req"
+            fi
+            ;;
         install)
             if [ -e "$REQUIREMENTS_FILE" ]; then
                 pip install -r $REQUIREMENTS_FILE
@@ -286,33 +301,17 @@ requirements(){
                     info "Try one by one installation."
                     exit 1
                 fi
-                
-                 # Get the list of outdated packages
-                outdated=$(pip list --outdated)
-                # Check if the output is not empty
-                if [[ -z "$outdated" ]]; then
-                    info "All packages are up-to-date."
-                else
-                    warning "There are outdated packages:"
-                    echo "$outdated"
-                    info "To update packages run command: update_req"
-                fi
+                # Check if there are outdated packages
+                check_outdated
             else
                 error "There are not $REQUIREMENTS_FILE available"
             fi
             ;;
         update)
-            # Get the list of outdated packages
-            outdated=$(pip list --outdated)
-            # Check if the output is not empty
-            if [[ -z "$outdated" ]]; then
-                info "All packages are up-to-date."
-            else
-                info "Updating requirements"
-                pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
-                pip freeze > $REQUIREMENTS_FILE
-                success "Requirements updated."
-            fi
+            info "Updating requirements"
+            pip install --upgrade $(pip list --outdated | awk 'NR>2 {print $1}')
+            pip freeze > $REQUIREMENTS_FILE
+            success "Requirements updated."
             ;;
         remove)
             if [ -e "$REQUIREMENTS_FILE" ]; then
