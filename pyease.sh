@@ -144,7 +144,7 @@ venv(){
             # If .venv folder does not exist
             if [ ! -d "$VENV_DIR" ]; then
                 # Create .venv as venv virtual environment
-                $VENV_CMD
+                eval $VENV_CMD
                 # If previuos command went well
                 if [ $? -eq 0 ]; then
                     success "Virtual environment created at '$VENV_DIR'."
@@ -171,7 +171,7 @@ venv(){
             info "$SYS_INFO"
             # Activate venv
 
-            if $ACTIVE_VENV_CMD; then
+            if eval $ACTIVE_VENV_CMD; then
                 python_version=$(python --version)
                 info "$python_version"
                 venv upgrade_pip
@@ -183,7 +183,7 @@ venv(){
         upgrade_pip)
             # Upgrade pip with latest version
             if venv is_activated; then
-                $UPGRADE_PIP_CMD
+                eval $UPGRADE_PIP_CMD
             else
                 error "pip upgrade cant be done, venv is not activated."
             fi
@@ -313,7 +313,7 @@ init(){
 }
 
 run(){
-    $RUN_CODE_CMD
+    eval $RUN_CODE_CMD
 }
 
 requirements(){
