@@ -186,6 +186,7 @@ venv(){
                 $UPGRADE_PIP_CMD
             else
                 error "pip upgrade cant be done, venv is not activated."
+            fi
             ;;
         deactivate)
             if venv is_activated; then
