@@ -131,9 +131,14 @@ venv(){
             # Activate venv
 
             if eval $ACTIVE_VENV_CMD; then
-                python_version=$(python --version)
-                info "$python_version"
-                venv upgrade_pip
+                if python --version; then
+                    python_version=$(python --version)
+                    info "$python_version"
+                    venv upgrade_pip
+                else
+                    error ".venv python version missmatch with the python version installed on your machine"
+                    info "Try commands: clean init, to start fresh."
+                fi
             else
                 error "venv could not be activated"
                 info "Try commands: clean init, to start fresh."
