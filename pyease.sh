@@ -56,6 +56,36 @@ MessagePrinter
 int 
 ########################## End Message Printer Code ##########################
 
+is_windows() {
+    if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+        return 0
+    elif uname -s | grep -qE '^(MINGW|MSYS|CYGWIN)'; then
+        return 0
+    elif [[ -n "$WINDIR" || -n "$SystemRoot" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+init_system_comands(){
+    if is_windows; then
+        SYS_INFO="Running on Windows"
+        VENV_CMD="py -m venv $VENV_DIR"
+        ACTIVE_VENV_CMD="source $VENV_DIR/Scripts/activate"
+        UPGRADE_PIP_CMD="$VENV_DIR/Scripts/python.exe -m pip install --upgrade pip"
+        RUN_CODE_CMD="py $MAIN_TEMPLATE_FILE"
+    else
+        SYS_INFO="Running on Unix"
+        VENV_CMD="python3 -m venv $VENV_DIR"
+        ACTIVE_VENV_CMD="source $VENV_DIR/bin/activate"
+        UPGRADE_PIP_CMD="pip install --upgrade pip"
+        RUN_CODE_CMD="python $MAIN_TEMPLATE_FILE"
+    fi
+
+}
+
+
 ############# Header ##################
 print_header() {
     SCRIPT_NAME="pyease"
@@ -103,29 +133,19 @@ REQUIREMENTS_FILE="requirements.txt"
 python_interpreter_path="$PWD/$VENV_DIR/bin/python"
 json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
 
+init_system_comands
 
-is_windows() {
-    if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
-        return 0
-    elif uname -s | grep -qE '^(MINGW|MSYS|CYGWIN)'; then
-        return 0
-    elif [[ -n "$WINDIR" || -n "$SystemRoot" ]]; then
-        return 0
-    else
-        return 1
-    fi
-}
 
-# Function to set or remove venv
+
+# Functions to applied to .venv
 venv(){
     case $1 in
         set)
+            # If .venv folder does not exist
             if [ ! -d "$VENV_DIR" ]; then
-                if is_windows; then
-                    py -m venv $VENV_DIR
-                else
-                    python3 -m venv $VENV_DIR
-                fi
+                # Create .venv as venv virtual environment
+                $VENV_CMD
+                # If previuos command went well
                 if [ $? -eq 0 ]; then
                     success "Virtual environment created at '$VENV_DIR'."
                 else
@@ -136,41 +156,36 @@ venv(){
             fi
             ;;
         remove)
+            # If .venv folder exist
             if [ -d "$VENV_DIR" ]; then
                 if rm -r "$VENV_DIR"; then
-                    success "venv deleted successfully."
+                    success ".venv deleted successfully."
                 else
                     error "Could not delete the virtual environment"
-                    exit 1
                 fi
             else
-                info "venv does not exist."
+                info ".venv does not exist."
             fi
             ;;
         activate)
-            if [ -f "$VENV_DIR/bin/activate" ]; then
-                source $VENV_DIR/bin/activate
-                info "Running from Unix"
+            info "$SYS_INFO"
+            # Activate venv
+
+            if $ACTIVE_VENV_CMD; then
                 python_version=$(python --version)
-                if [ $? -eq 0 ]; then
-                    info "$python_version"
-                    pip install --upgrade pip
-                else
-                    error "python version installed on machine is not the same as the one on .venv"
-                    info "to remove the actual .venv and create a new one with the installed pyhon version, run command: clean, and then init"
-                fi
-            elif [ -f "$VENV_DIR/Scripts/activate" ]; then
-                source $VENV_DIR/Scripts/activate
-                info "Running from Win"
-                python_version=$(py --version)
-                if [ $? -eq 0 ]; then
-                    info "$python_version"
-                    $VENV_DIR/Scripts/python.exe -m pip install --upgrade pip
-                else
-                    error "python version installed on machine is not the same as the one on .venv"
-                    info "to remove the actual .venv and create a new one with the installed pyhon vreion, run command: clean, and then init"
-                fi
+                info "$python_version"
+                venv upgrade_pip
+            else
+                error "venv could not be activated"
+                info "Try commands: clean init, to start fresh."
             fi
+            ;;
+        upgrade_pip)
+            # Upgrade pip with latest version
+            if venv is_activated; then
+                $UPGRADE_PIP_CMD
+            else
+                error "pip upgrade cant be done, venv is not activated."
             ;;
         deactivate)
             if venv is_activated; then
@@ -181,7 +196,7 @@ venv(){
             fi
             ;;
         is_activated)
-            # Verify if .venv is active
+            # Verify if .venv is activated
             if [[ -n "$VIRTUAL_ENV" ]]; then
                 # True
                 return 0
@@ -215,7 +230,6 @@ vscode(){
                     success "vscode settings deleted successfully."
                 else
                     error "Could not delete vscode settings"
-                    exit 1
                 fi
             else
                 info "vscode settings dont not exist."
@@ -298,11 +312,7 @@ init(){
 }
 
 run(){
-    if is_windows; then
-        py $MAIN_TEMPLATE_FILE
-    else
-        python $MAIN_TEMPLATE_FILE
-    fi
+    $RUN_CODE_CMD
 }
 
 requirements(){
