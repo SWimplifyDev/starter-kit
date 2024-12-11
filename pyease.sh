@@ -307,13 +307,13 @@ requirements(){
                 pip install -r $REQUIREMENTS_FILE
                 if [ $? -eq 0 ]; then
                     success "All requirements are installed."
+                     # Check if there are outdated packages
+                    check_outdated
                 else
                     error "Packages installation failed."
                     info "Try one by one installation."
-                    exit 1
                 fi
-                # Check if there are outdated packages
-                check_outdated
+               
             else
                 error "There are not $REQUIREMENTS_FILE available"
             fi
