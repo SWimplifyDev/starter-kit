@@ -13,7 +13,7 @@ source <(curl -fsSL https://raw.githubusercontent.com/SWimplifyDev/bash/main/mes
 # Import Print Functions
 MessagePrinter
 int 
-########################## End Message Printer Code ##########################
+########################## End Message Printer Code ######
 
 is_windows() {
     if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
