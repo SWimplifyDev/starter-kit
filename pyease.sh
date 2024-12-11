@@ -131,9 +131,9 @@ venv(){
             # Activate venv
 
             if eval $ACTIVE_VENV_CMD; then
-                if python --version; then
-                    python_version=$(python --version)
+                if python_version=$(python --version 2>/dev/null); then
                     info "$python_version"
+                    info "upgrading pip"
                     venv upgrade_pip
                 else
                     error ".venv python version missmatch with the python version installed on your machine"
