@@ -31,13 +31,15 @@ init_system_comands(){
     if is_windows; then
         SYS_INFO="Running on Windows"
         VENV_CMD="py -m venv $VENV_DIR"
-        ACTIVE_VENV_CMD="source $VENV_DIR/Scripts/activate"
+        SCRIPT_FOLDER="Scripts"
+        ACTIVE_VENV_CMD="source $VENV_DIR/$SCRIPT_FOLDER/activate"
         UPGRADE_PIP_CMD="$VENV_DIR/Scripts/python.exe -m pip install --upgrade pip"
         RUN_CODE_CMD="py $MAIN_TEMPLATE_FILE"
     else
         SYS_INFO="Running on Unix"
         VENV_CMD="python3 -m venv $VENV_DIR"
-        ACTIVE_VENV_CMD="source $VENV_DIR/bin/activate"
+        SCRIPT_FOLDER="bin"
+        ACTIVE_VENV_CMD="source $VENV_DIR/$SCRIPT_FOLDER/activate"
         UPGRADE_PIP_CMD="pip install --upgrade pip"
         RUN_CODE_CMD="python $MAIN_TEMPLATE_FILE"
     fi
@@ -94,6 +96,8 @@ json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
 
 init_system_comands
 
+python_interpreter_path="$PWD/$VENV_DIR/$SCRIPT_FOLDER/python"
+json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
 
 
 # Functions to applied to .venv
