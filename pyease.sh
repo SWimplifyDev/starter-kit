@@ -35,6 +35,7 @@ init_system_comands(){
         ACTIVE_VENV_CMD="source $VENV_DIR/$SCRIPT_FOLDER/activate"
         UPGRADE_PIP_CMD="$VENV_DIR/Scripts/python.exe -m pip install --upgrade pip"
         RUN_CODE_CMD="py $MAIN_TEMPLATE_FILE"
+        PYTHON_INTERPRETER_PATH="$PWD/$VENV_DIR/$SCRIPT_FOLDER/python.exe"
     else
         SYS_INFO="Running on Unix"
         VENV_CMD="python3 -m venv $VENV_DIR"
@@ -42,6 +43,7 @@ init_system_comands(){
         ACTIVE_VENV_CMD="source $VENV_DIR/$SCRIPT_FOLDER/activate"
         UPGRADE_PIP_CMD="pip install --upgrade pip"
         RUN_CODE_CMD="python $MAIN_TEMPLATE_FILE"
+        PYTHON_INTERPRETER_PATH="$PWD/$VENV_DIR/$SCRIPT_FOLDER/python"
     fi
 
 }
@@ -91,13 +93,10 @@ GITIGNORE_FILE=".gitignore"
 MAIN_TEMPLATE_FILE="main.py"
 REQUIREMENTS_FILE="requirements.txt"
 
-python_interpreter_path="$PWD/$VENV_DIR/bin/python"
-json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
-
 init_system_comands
 
-python_interpreter_path="$PWD/$VENV_DIR/$SCRIPT_FOLDER/python"
-json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
+
+json_content="{\"python.defaultInterpreterPath\": \"$PYTHON_INTERPRETER_PATH\"}"
 
 
 # Functions to applied to .venv
